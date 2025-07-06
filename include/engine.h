@@ -1,5 +1,7 @@
 #ifndef ENGINE_H
 #define ENGINE_H
+#include <string.h>
+#include <iostream>
 
 namespace Engine
 {
@@ -13,5 +15,7 @@ namespace Engine
   };
 }
 extern Engine::Engine_Difficulty diffculty;
+
+Engine::Engine_Difficulty getDifficulty(std::string s);
 
 #endif
