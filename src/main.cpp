@@ -26,24 +26,14 @@ int main(int argc, char *argv[])
   }
   diffculty = getDifficulty(arg);
 
-#include <unistd.h>
-#include <iostream>
-
-  char cwd[1024];
-  if (getcwd(cwd, sizeof(cwd)) != nullptr)
-    std::cout << "Current working dir: " << cwd << std::endl;
-  else
-    perror("getcwd() error");
-
   SetConfigFlags(FLAG_WINDOW_HIGHDPI);
   InitWindow(WindowWidth, WindowHeight, GAMEWINDOWNAME);
   InitAudioDevice();
   SetTargetFPS(GAMEFPS);
 
   Grid::initGrid();
-  TextureManager::LoadAllTextures();
 
-    while (!WindowShouldClose())
+  while (!WindowShouldClose())
   {
     BeginDrawing();
     ClearBackground(RAYWHITE);
@@ -51,7 +41,6 @@ int main(int argc, char *argv[])
     Grid::drawGrid();
     EndDrawing();
   }
-  TextureManager::UnloadAllTextures();
   CloseAudioDevice();
   CloseWindow();
 
