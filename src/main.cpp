@@ -1,9 +1,12 @@
 #include <iostream>
 #include <string>
-#include "engine.h" // Your own difficulty handling (assumed)
+#include "engine.h"
+#include "game.h"
 #include "constants.h"
 #include "grid.h"
 #include "raylib.h"
+#include <unistd.h>
+#include <limits.h>
 
 Engine::Engine_Difficulty diffculty;
 
@@ -21,15 +24,26 @@ int main(int argc, char *argv[])
     std::cout << "Invalid argument\n";
     return 1;
   }
-
   diffculty = getDifficulty(arg);
+
+#include <unistd.h>
+#include <iostream>
+
+  char cwd[1024];
+  if (getcwd(cwd, sizeof(cwd)) != nullptr)
+    std::cout << "Current working dir: " << cwd << std::endl;
+  else
+    perror("getcwd() error");
+
   SetConfigFlags(FLAG_WINDOW_HIGHDPI);
   InitWindow(WindowWidth, WindowHeight, GAMEWINDOWNAME);
   InitAudioDevice();
   SetTargetFPS(GAMEFPS);
-  Grid::initGrid();
 
-  while (!WindowShouldClose())
+  Grid::initGrid();
+  TextureManager::LoadAllTextures();
+
+    while (!WindowShouldClose())
   {
     BeginDrawing();
     ClearBackground(RAYWHITE);
@@ -37,7 +51,7 @@ int main(int argc, char *argv[])
     Grid::drawGrid();
     EndDrawing();
   }
-
+  TextureManager::UnloadAllTextures();
   CloseAudioDevice();
   CloseWindow();
 

@@ -9,7 +9,6 @@ namespace Grid
 
   void initGrid()
   {
-    int squareSize = GetScreenWidth() / 8; // Use constant
     std::cout << "Initializing Grid..." << std::endl;
     for (int row = 0; row < 8; ++row)
     {
@@ -20,9 +19,6 @@ namespace Grid
         newCell.color = isDark ? DARKBROWN : LIGHTGRAY;
         newCell.isOccupied = false;
         grid[row][col] = newCell;
-
-        int x = col * squareSize;
-        int y = row * squareSize;
       }
     }
   }
