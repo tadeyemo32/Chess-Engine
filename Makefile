@@ -1,32 +1,35 @@
-# === Compiler and Flags ===
-CXX = g++
-CXXFLAGS = -std=c++17 -Iinclude -I/opt/homebrew/include -Wall -Wextra -pedantic
-LDFLAGS = -L/opt/homebrew/lib -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf
+# ---------------- CONFIG ----------------
+CC := clang++
+CFLAGS := -Wall -Wextra -std=c++11 -Iinclude
 
-# === Directories ===
-SRC_DIR := src
-BUILD_DIR := build
-BIN := $(BUILD_DIR)/main
+SRCDIR := src
+INCDIR := include
+BINDIR := build
+TARGET := $(BINDIR)/main
 
-# === Source and Object Files ===
-SRC := $(wildcard $(SRC_DIR)/*.cpp)
-OBJ := $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRC))
+SRC := $(wildcard $(SRCDIR)/*.cpp)
+OBJ := $(SRC:$(SRCDIR)/%.c=$(BINDIR)/%.o)
 
-# === Default Target ===
-all: $(BIN)
+# Raylib and platform-specific libraries (macOS ARM64)
+LDFLAGS := -lraylib -lm -ldl -lpthread -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL
 
-# === Link object files into the final binary ===
-$(BIN): $(OBJ)
-	@mkdir -p $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
+# ---------------- RULES ----------------
+all: $(TARGET)
 
-# === Compile .cpp files to .o files ===
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
-	@mkdir -p $(BUILD_DIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+$(TARGET): $(OBJ) | $(BINDIR)
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
-# === Clean Build Artifacts ===
+$(BINDIR)/%.o: $(SRCDIR)/%.c | $(BINDIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+run: $(TARGET)
+	./$(TARGET)
+
 clean:
-	rm -rf $(BUILD_DIR)
+	rm -f $(BINDIR)/*.o
+	rm -f $(TARGET)
 
-.PHONY: all clean
+$(BINDIR):
+	mkdir -p $(BINDIR)
+
+.PHONY: all clean run

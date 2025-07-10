@@ -1,25 +1,45 @@
 #include <iostream>
-#include <string.h>
-#include "engine.h"
-Engine::Engine_Difficulty diffculty; // initialize the engine difficulty to easy
+#include <string>
+#include "engine.h" // Your own difficulty handling (assumed)
+#include "constants.h"
+#include "grid.h"
+#include "raylib.h"
+
+Engine::Engine_Difficulty diffculty;
 
 int main(int argc, char *argv[])
 {
-
   if (argc != 2)
   {
     std::cout << "Invalid Number of Arguments\n";
     return -1;
   }
-  std::string arg = argv[1];
 
+  std::string arg = argv[1];
   if (arg != "easy" && arg != "medium" && arg != "hard")
   {
-    std::cout << "Invalid argument" << "\n";
+    std::cout << "Invalid argument\n";
     return 1;
   }
 
-  diffculty = getDifficulty(std::string(argv[1]));
+  diffculty = getDifficulty(arg);
+  SetConfigFlags(FLAG_WINDOW_HIGHDPI);
+  InitWindow(WindowWidth, WindowHeight, GAMEWINDOWNAME);
+  InitAudioDevice();
+  SetTargetFPS(GAMEFPS);
+  Grid::initGrid();
+
+  while (!WindowShouldClose())
+  {
+    BeginDrawing();
+    ClearBackground(RAYWHITE);
+
+    Grid::drawGrid();
+    EndDrawing();
+  }
+
+  CloseAudioDevice();
+  CloseWindow();
 
   return 0;
 }
