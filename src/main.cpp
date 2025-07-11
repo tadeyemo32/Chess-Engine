@@ -8,6 +8,16 @@
 #include <unistd.h>
 #include <limits.h>
 
+namespace troubleShoot
+{
+
+  void checkMousePostion()
+  {
+    std::cout << "X: " << GetMousePosition().x << " Y: " << GetMousePosition().y << " \n";
+  }
+
+}
+
 Engine::Engine_Difficulty diffculty;
 
 int main(int argc, char *argv[])
@@ -32,17 +42,22 @@ int main(int argc, char *argv[])
   SetTargetFPS(GAMEFPS);
 
   Grid::initGrid();
-
+  initBoard();
   while (!WindowShouldClose())
   {
     BeginDrawing();
     ClearBackground(RAYWHITE);
+    Grid::drawGrid(); // draw the gird
 
-    Grid::drawGrid();
+    drawBoard();
+    // draw
+
+    // error checking
+    // troubleShoot::checkMousePostion();
     EndDrawing();
   }
   CloseAudioDevice();
   CloseWindow();
-
+  unloadTextures();
   return 0;
 }
