@@ -1,4 +1,5 @@
 #include "game.h"
+#include "grid.h"
 #include <type_traits>
 std::vector<Piece *> gamePieces;
 Game::GameState gameState = Game::GameState::PLAYING;
@@ -25,12 +26,19 @@ void initBoard()
     std::cout << pos.y << "\n";
     Pawn *newPawn = new Pawn(pawnBlack, pos, BLACK);
     gamePieces.push_back(newPawn);
+
+    int row = 1; // Second row (0-indexed)
+    int col = i;
+    Grid::grid[row][col].piece = newPawn;
+    Grid::grid[row][col].isOccupied = true;
   }
   // king
   pos.x = (4 * squareSize) - offsetX;
   pos.y = -offsetY;
   King *newKing = new King(kingBlack, pos, BLACK);
   gamePieces.push_back(newKing);
+  Grid::grid[0][4].piece = newKing; // a8 position (0,4)
+  Grid::grid[0][4].isOccupied = true;
 
   // queen
   pos.x = (3 * squareSize) - offsetX;
@@ -120,7 +128,6 @@ void initBoard()
   Rook *newRookRightWhite = new Rook(rookWhite, pos, WHITE);
   gamePieces.push_back(newRookRightWhite);
 }
-
 void drawBoard()
 {
   for (auto i : gamePieces)

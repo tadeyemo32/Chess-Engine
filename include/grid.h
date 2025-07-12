@@ -1,8 +1,10 @@
 #ifndef GRID_H
 #define GRID_H
+
 #include "constants.h"
 #include "raylib.h"
-#define gridLength (WindowHeight / 8)
+#include "game.h"
+#include <string> // Add this for string support
 
 namespace Grid
 {
@@ -11,12 +13,18 @@ namespace Grid
   public:
     bool isOccupied;
     Color color;
+    Piece *piece;
   };
 
+  extern Cell grid[8][8];
+
+  // Function declarations - NO Grid:: prefix here
   void initGrid();
-
   void drawGrid();
-
+  void test(int x, int y);
+  void handleCellClick(Vector2 mousePos); // Proper declaration
+  std::string indexToNotation(int row, int col);
+  std::pair<int, int> notationToIndex(const std::string &chessNotation);
 }
 
 #endif

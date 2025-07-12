@@ -13,7 +13,9 @@ namespace troubleShoot
 
   void checkMousePostion()
   {
-    std::cout << "X: " << GetMousePosition().x << " Y: " << GetMousePosition().y << " \n";
+    int x = GetMousePosition().x;
+    int y = GetMousePosition().y;
+    std::cout << "X: " << x << " Y: " << y << " \n";
   }
 
 }
@@ -45,6 +47,11 @@ int main(int argc, char *argv[])
   initBoard();
   while (!WindowShouldClose())
   {
+
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+    {
+      Grid::handleCellClick(GetMousePosition());
+    }
     BeginDrawing();
     ClearBackground(RAYWHITE);
     Grid::drawGrid(); // draw the gird
@@ -52,8 +59,6 @@ int main(int argc, char *argv[])
     drawBoard();
     // draw
 
-    // error checking
-    // troubleShoot::checkMousePostion();
     EndDrawing();
   }
   CloseAudioDevice();

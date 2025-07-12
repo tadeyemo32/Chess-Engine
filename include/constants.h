@@ -5,7 +5,7 @@
 #define WindowWidth 800
 #define WindowHeight 800
 
-#define GAMEFPS 60
+#define GAMEFPS 24
 
 #define GAMEWINDOWNAME "Chess"
 

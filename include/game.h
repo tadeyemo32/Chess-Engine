@@ -108,5 +108,6 @@ extern std::vector<Piece *> gamePieces;
 void initBoard();
 void drawBoard();
 void unloadTextures();
+void setGridPiece(Piece *p);
 
 #endif // GAME_H
