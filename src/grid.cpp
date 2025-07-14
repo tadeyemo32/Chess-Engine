@@ -6,6 +6,7 @@
 namespace Grid
 {
   Cell grid[8][8];
+  Vector2 selectedCell = {-1, -1}; // Track selected cell
 
   void initGrid()
   {
@@ -18,22 +19,8 @@ namespace Grid
         bool isDark = (row + col) % 2 == 0;
         newCell.color = isDark ? DARKBROWN : LIGHTGRAY;
         newCell.isOccupied = false;
+        newCell.piece = nullptr;
         grid[row][col] = newCell;
-      }
-    }
-
-    for (int row = 0; row < 2; ++row)
-    {
-      for (int col = 0; col < 8; ++col)
-      {
-        grid[row][col].isOccupied = true; // set top row to cells to be occupied
-      }
-    }
-    for (int row = 0; row < 2; ++row)
-    {
-      for (int col = 0; col < 8; ++col)
-      {
-        grid[row + 6][col].isOccupied = true; // set bottom row to cells to be occupied
       }
     }
   }
@@ -48,22 +35,21 @@ namespace Grid
       {
         int x = col * squareSize;
         int y = row * squareSize;
-        DrawRectangle(x, y, squareSize, squareSize, grid[row][col].color);
+
+        // Highlight selected cell
+        if (selectedCell.x == row && selectedCell.y == col)
+        {
+          DrawRectangle(x, y, squareSize, squareSize, YELLOW);
+        }
+        else
+        {
+          DrawRectangle(x, y, squareSize, squareSize, grid[row][col].color);
+        }
       }
     }
   }
 
-  void test(int x, int y)
-  {
-    grid[x][y].color = RED;
-  }
-
-  // grid.cpp
-#include <cctype> // For tolower()
-
-  // ... other Grid functions ...
-
-  std::string Grid::indexToNotation(int row, int col)
+  std::string indexToNotation(int row, int col)
   {
     if (row < 0 || row >= 8 || col < 0 || col >= 8)
     {
@@ -75,7 +61,7 @@ namespace Grid
     return std::string(1, file) + rank;
   }
 
-  std::pair<int, int> Grid::notationToIndex(const std::string &chessNotation)
+  std::pair<int, int> notationToIndex(const std::string &chessNotation)
   {
     if (chessNotation.length() != 2)
     {
@@ -95,25 +81,52 @@ namespace Grid
     return {row, col};
   }
 
-  void Grid::handleCellClick(Vector2 mousePos)
+  Vector2 handleCellClick(Vector2 mousePos)
   {
     int squareSize = GetScreenWidth() / 8;
-
-    // Convert mouse position to grid indices
     int col = mousePos.x / squareSize;
     int row = mousePos.y / squareSize;
 
     // Boundary check
     if (row >= 0 && row < 8 && col >= 0 && col < 8)
     {
-      // Turn clicked cell red
-      grid[row][col].color = RED;
+      // Update selected cell
+      selectedCell = {(float)row, (float)col};
 
-      // Print debug info
       std::cout << "Clicked at: "
                 << "Row " << row << ", Col " << col << " | "
                 << "Chess notation: " << indexToNotation(row, col) << "\n";
+
+      if (grid[row][col].piece != nullptr)
+      {
+        std::cout << "Piece found: " << grid[row][col].piece->type << "\n";
+      }
     }
+    else
+    {
+      selectedCell = {-1, -1}; // Deselect if clicked outside
+    }
+
+    return {(float)row, (float)col};
   }
 
+  void resetSelection()
+  {
+    selectedCell = {-1, -1};
+  }
+
+  bool isCellSelected()
+  {
+    return selectedCell.x >= 0 && selectedCell.y >= 0;
+  }
+
+  Vector2 getSelectedCell()
+  {
+    return selectedCell;
+  }
+
+  Cell &getCell(int row, int col)
+  {
+    return grid[row][col];
+  }
 }

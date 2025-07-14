@@ -22,7 +22,7 @@ namespace Grid
   void initGrid();
   void drawGrid();
   void test(int x, int y);
-  void handleCellClick(Vector2 mousePos); // Proper declaration
+  Vector2 handleCellClick(Vector2 mousePos); // Proper declaration
   std::string indexToNotation(int row, int col);
   std::pair<int, int> notationToIndex(const std::string &chessNotation);
 }

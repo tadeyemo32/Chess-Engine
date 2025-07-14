@@ -4,6 +4,7 @@
 #include <vector>
 #include "raylib.h"
 #include <iostream>
+#include <string>
 
 // Global texture declarations
 extern Texture2D PawnWhite;
@@ -27,6 +28,7 @@ namespace Game
     PLAYING,
     PAUSED,
   };
+
 }
 
 // Base class for all pieces
@@ -36,11 +38,12 @@ public:
   Vector2 pos;
   Texture2D texture;
   Color color;
+  int type;
 
   Piece() {}
 
-  Piece(Texture2D &text, Vector2 vectorPosition, Color c)
-      : pos(vectorPosition), texture(text), color(c) {}
+  Piece(Texture2D &texture, Vector2 vectorPosition, Color c)
+      : pos(vectorPosition), texture(texture), color(c) {}
 
   virtual ~Piece() {}
 };
@@ -50,16 +53,15 @@ class Pawn : public Piece
 {
 public:
   int type = 0;
-
   Pawn(Texture2D &text, Vector2 vectorPosition, Color c)
       : Piece(text, vectorPosition, c) {}
 };
 
 class Knight : public Piece
 {
+
 public:
   int type = 1;
-
   Knight(Texture2D &text, Vector2 vectorPosition, Color c)
       : Piece(text, vectorPosition, c) {}
 };
@@ -68,7 +70,6 @@ class Bishop : public Piece
 {
 public:
   int type = 2;
-
   Bishop(Texture2D &text, Vector2 vectorPosition, Color c)
       : Piece(text, vectorPosition, c) {}
 };
@@ -77,7 +78,6 @@ class Rook : public Piece
 {
 public:
   int type = 3;
-
   Rook(Texture2D &text, Vector2 vectorPosition, Color c)
       : Piece(text, vectorPosition, c) {}
 };
@@ -86,7 +86,6 @@ class Queen : public Piece
 {
 public:
   int type = 4;
-
   Queen(Texture2D &text, Vector2 vectorPosition, Color c)
       : Piece(text, vectorPosition, c) {}
 };
@@ -95,7 +94,6 @@ class King : public Piece
 {
 public:
   int type = 5;
-
   King(Texture2D &text, Vector2 vectorPosition, Color c)
       : Piece(text, vectorPosition, c) {}
 };
@@ -109,5 +107,7 @@ void initBoard();
 void drawBoard();
 void unloadTextures();
 void setGridPiece(Piece *p);
+bool movePiece();
+bool isWithinBounds(int x, int y);
 
 #endif // GAME_H

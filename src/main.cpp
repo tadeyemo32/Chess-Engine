@@ -50,7 +50,8 @@ int main(int argc, char *argv[])
 
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
     {
-      Grid::handleCellClick(GetMousePosition());
+
+      movePiece();
     }
     BeginDrawing();
     ClearBackground(RAYWHITE);
