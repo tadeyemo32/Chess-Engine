@@ -6,7 +6,7 @@
 namespace Grid
 {
   Cell grid[8][8];
-  Vector2 selectedCell = {-1, -1}; // Track selected cell
+  Vector2 selectedCell = {-1, -1};
 
   void initGrid()
   {
@@ -83,28 +83,25 @@ namespace Grid
 
   Vector2 handleCellClick(Vector2 mousePos)
   {
+    using namespace std;
     int squareSize = GetScreenWidth() / 8;
     int col = mousePos.x / squareSize;
     int row = mousePos.y / squareSize;
 
-    // Boundary check
     if (row >= 0 && row < 8 && col >= 0 && col < 8)
     {
-      // Update selected cell
       selectedCell = {(float)row, (float)col};
-
-      std::cout << "Clicked at: "
-                << "Row " << row << ", Col " << col << " | "
-                << "Chess notation: " << indexToNotation(row, col) << "\n";
-
+      cout << "Selected: " << indexToNotation(row, col);
       if (grid[row][col].piece != nullptr)
       {
-        std::cout << "Piece found: " << grid[row][col].piece->type << "\n";
+        cout << " - " << grid[row][col].piece->type;
       }
+      cout << endl;
     }
     else
     {
-      selectedCell = {-1, -1}; // Deselect if clicked outside
+      selectedCell = {-1, -1};
+      cout << "Deselected" << endl;
     }
 
     return {(float)row, (float)col};

@@ -14,7 +14,7 @@ Engine::Engine_Difficulty getDifficulty(std::string s)
 
   {
     std::cout << "Valid Argument Difficulty set to Medium" << "\n";
-    return Engine::Engine_Difficulty::EASY;
+    return Engine::Engine_Difficulty::MEDIUM;
   }
   else
   {
