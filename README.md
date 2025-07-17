@@ -52,3 +52,9 @@ git clone https://github.com/tadeyemo32/Chess-Engine.git
 cd chess-game
 make
 ./build/main
+```
+
+### Todo 
+- Stockfish API integration 
+- Scoring system 
+- Timer 
