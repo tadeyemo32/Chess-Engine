@@ -9,4 +9,7 @@
 
 #define GAMEWINDOWNAME "Chess"
 
+const int offsetX = 10;
+const int offsetY = 15;
+
 #endif

@@ -6,20 +6,25 @@
 #include <iostream>
 #include <string>
 
-// Global texture declarations
-extern Texture2D PawnWhite;
-extern Texture2D KnightWhite;
-extern Texture2D RookWhite;
-extern Texture2D BishopWhite;
-extern Texture2D QueenWhite;
-extern Texture2D KingWhite;
+enum PieceType
+{
+  PAWN = 0,
+  KNIGHT = 1,
+  BISHOP = 2,
+  ROOK = 3,
+  QUEEN = 4,
+  KING = 5
+};
 
-extern Texture2D PawnBlack;
-extern Texture2D KnightBlack;
-extern Texture2D RookBlack;
-extern Texture2D BishopBlack;
-extern Texture2D QueenBlack;
-extern Texture2D KingBlack;
+inline bool operator==(const Color &a, const Color &b)
+{
+  return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
+}
+
+inline bool operator!=(const Color &a, const Color &b)
+{
+  return !(a == b);
+}
 
 namespace Game
 {
@@ -28,10 +33,8 @@ namespace Game
     PLAYING,
     PAUSED,
   };
-
 }
 
-// Base class for all pieces
 class Piece
 {
 public:
@@ -39,75 +42,50 @@ public:
   Texture2D texture;
   Color color;
   int type;
+  bool hasMoved = false;
 
   Piece() {}
-
-  Piece(Texture2D &texture, Vector2 vectorPosition, Color c)
-      : pos(vectorPosition), texture(texture), color(c) {}
-
+  Piece(Texture2D &texture, Vector2 pos, Color c) : pos(pos), texture(texture), color(c) {}
   virtual ~Piece() {}
 };
 
-// Derived piece classes
 class Pawn : public Piece
 {
 public:
-  int type = 0;
-  Pawn(Texture2D &text, Vector2 vectorPosition, Color c)
-      : Piece(text, vectorPosition, c) {}
+  Pawn(Texture2D &text, Vector2 pos, Color c) : Piece(text, pos, c) { type = PAWN; }
 };
-
 class Knight : public Piece
 {
-
 public:
-  int type = 1;
-  Knight(Texture2D &text, Vector2 vectorPosition, Color c)
-      : Piece(text, vectorPosition, c) {}
+  Knight(Texture2D &text, Vector2 pos, Color c) : Piece(text, pos, c) { type = KNIGHT; }
 };
-
 class Bishop : public Piece
 {
 public:
-  int type = 2;
-  Bishop(Texture2D &text, Vector2 vectorPosition, Color c)
-      : Piece(text, vectorPosition, c) {}
+  Bishop(Texture2D &text, Vector2 pos, Color c) : Piece(text, pos, c) { type = BISHOP; }
 };
-
 class Rook : public Piece
 {
 public:
-  int type = 3;
-  Rook(Texture2D &text, Vector2 vectorPosition, Color c)
-      : Piece(text, vectorPosition, c) {}
+  Rook(Texture2D &text, Vector2 pos, Color c) : Piece(text, pos, c) { type = ROOK; }
 };
-
 class Queen : public Piece
 {
 public:
-  int type = 4;
-  Queen(Texture2D &text, Vector2 vectorPosition, Color c)
-      : Piece(text, vectorPosition, c) {}
+  Queen(Texture2D &text, Vector2 pos, Color c) : Piece(text, pos, c) { type = QUEEN; }
 };
-
 class King : public Piece
 {
 public:
-  int type = 5;
-  King(Texture2D &text, Vector2 vectorPosition, Color c)
-      : Piece(text, vectorPosition, c) {}
+  King(Texture2D &text, Vector2 pos, Color c) : Piece(text, pos, c) { type = KING; }
 };
 
-// Global game state and game pieces list
 extern Game::GameState gameState;
 extern std::vector<Piece *> gamePieces;
 
-// Game logic
 void initBoard();
 void drawBoard();
 void unloadTextures();
-void setGridPiece(Piece *p);
 bool movePiece();
-bool isWithinBounds(int x, int y);
 
-#endif // GAME_H
+#endif
