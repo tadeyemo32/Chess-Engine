@@ -17,25 +17,25 @@ A complete chess implementation with standard rules and visual feedback, built w
 
 
 ### Visual Feedback
-- 🟡 **Selected piece highlighting** (yellow overlay)
-- 💚 **Possible moves indicator** (green dots)
-- 📜 **Algebraic notation** display for moves
-- ♟️ **Piece capture** animations
+-  **Selected piece highlighting** (yellow overlay)
+-  **Possible moves indicator** (green dots)
+- **Algebraic notation** display for moves
+-  **Piece capture** animations
 
 ![Selection Feedback](./assets/images/2.png)
 
 ### Game Mechanics
-- ⚪⚫ **Turn-based** gameplay (white/black alternating)
-- 🏁 **Check/checkmate** detection
-- ♻️ **Game reset** functionality
-- 📊 **Move history** in console
+-  **Turn-based** gameplay (white/black alternating)
+-  **Check/checkmate** detection
+-  **Game reset** functionality
+-  **Move history** in console
 
 ### Technical Implementation
-- 🏗️ **Object-oriented design** with proper inheritance:
+- **Object-oriented design** with proper inheritance:
   - Base `Piece` class
   - Derived classes for each piece type
-- 🗺️ **8x8 grid system** with cell states
-- 🖱️ **Mouse-based** interaction
+-  **8x8 grid system** with cell states
+-  **Mouse-based** interaction
 
 
 ## Installation
