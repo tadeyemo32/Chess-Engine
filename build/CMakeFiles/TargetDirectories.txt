@@ -1,3 +1,0 @@
-/home/kyuki/Chess-Engine/build/CMakeFiles/ChessEngine.dir
-/home/kyuki/Chess-Engine/build/CMakeFiles/edit_cache.dir
-/home/kyuki/Chess-Engine/build/CMakeFiles/rebuild_cache.dir
